@@ -5,7 +5,6 @@ import { createRouter, createMemoryHistory } from 'vue-router'
 import Login from '../src/views/Login.vue'
 
 const mockStore = {
-  isAuthenticated: false,
   login: vi.fn()
 }
 

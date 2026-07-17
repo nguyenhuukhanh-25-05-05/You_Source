@@ -1,5 +1,4 @@
 using AppApi.DTOs;
-using AppApi.Models;
 
 namespace AppApi.Services;
 

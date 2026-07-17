@@ -1,7 +1,6 @@
 using AppApi.Models;
 using AppApi.Services;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Identity;
 using Xunit;
 
 namespace AppApi.Tests;
