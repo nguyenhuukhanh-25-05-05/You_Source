@@ -81,7 +81,7 @@ sudo systemctl status starter-api
 ### Frontend
 
 ```bash
-cd frontend/starter-ui
+cd frontend/Frontend
 npm run build
 
 # Copy to web server

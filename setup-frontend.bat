@@ -4,7 +4,7 @@ echo   Frontend Setup
 echo ============================================
 echo.
 
-cd frontend\starter-ui
+cd frontend\Frontend
 call npm install
 if %errorlevel% neq 0 (
     echo [ERROR] npm install failed.

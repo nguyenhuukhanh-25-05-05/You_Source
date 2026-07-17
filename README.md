@@ -132,7 +132,7 @@ you_source/
 │       ├── wwwroot/
 │       └── Program.cs
 ├── frontend/
-│   └── starter-ui/
+│   └── Frontend/
 │       └── src/
 │           ├── assets/
 │           ├── components/
