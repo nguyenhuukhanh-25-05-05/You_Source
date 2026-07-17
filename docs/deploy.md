@@ -20,8 +20,8 @@ cd you_source
 
 ```bash
 # Backend
-cp backend/StarterAPI/appsettings.json backend/StarterAPI/appsettings.Production.json
-nano backend/StarterAPI/appsettings.Production.json
+cp backend/AppApi/appsettings.json backend/AppApi/appsettings.Production.json
+nano backend/AppApi/appsettings.Production.json
 ```
 
 Update:
@@ -46,7 +46,7 @@ docker-compose logs -f
 ### Backend
 
 ```bash
-cd backend/StarterAPI
+cd backend/AppApi
 dotnet publish -c Release -o ../../publish/backend
 
 # Run with systemd
@@ -62,7 +62,7 @@ After=network.target
 Type=notify
 User=www-data
 WorkingDirectory=/var/www/starter/backend
-ExecStart=/usr/bin/dotnet /var/www/starter/backend/StarterAPI.dll
+ExecStart=/usr/bin/dotnet /var/www/starter/backend/AppApi.dll
 Restart=always
 RestartSec=10
 Environment=ASPNETCORE_ENVIRONMENT=Production
@@ -131,7 +131,7 @@ sudo certbot --nginx -d your-domain.com
 
 ```bash
 # On server
-cd backend/StarterAPI
+cd backend/AppApi
 dotnet ef database update
 
 # Or auto-migrate on startup (already configured in Program.cs)
@@ -204,7 +204,7 @@ sudo kill -9 <PID>
 docker-compose ps sqlserver
 
 # Check connection string
-cat backend/StarterAPI/appsettings.Production.json
+cat backend/AppApi/appsettings.Production.json
 ```
 
 ### Permission denied

@@ -94,7 +94,7 @@ The JWT secret is **NOT** committed. Set it per environment:
 ### Development (User Secrets)
 
 ```bash
-cd backend\StarterAPI
+cd backend\AppApi
 dotnet user-secrets set "JwtSettings:Secret" "YourDevKey_AtLeast32CharactersLong!"
 ```
 
@@ -119,7 +119,7 @@ Copy `.env.example` to `.env` and fill in `JWT_SECRET`, `SQL_SA_PASSWORD`, etc. 
 ```
 you_source/
 ├── backend/
-│   └── StarterAPI/
+│   └── AppApi/
 │       ├── Controllers/
 │       ├── Data/
 │       ├── DTOs/
