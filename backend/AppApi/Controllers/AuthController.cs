@@ -75,6 +75,33 @@ public class AuthController : BaseController
         return SuccessResponse(info, "Current user");
     }
 
+    [EnableRateLimiting("auth")]
+    [HttpPost("forgot-password")]
+    public async Task<ActionResult<ApiResponse>> ForgotPassword([FromBody] ForgotPasswordRequest request)
+    {
+        await _authService.ForgotPasswordAsync(request.Email);
+        return OkResponse("If the email exists, a reset link has been sent");
+    }
+
+    [EnableRateLimiting("auth")]
+    [HttpPost("reset-password")]
+    public async Task<ActionResult<ApiResponse>> ResetPassword([FromBody] ResetPasswordRequest request)
+    {
+        await _authService.ResetPasswordAsync(request.Email, request.Token, request.NewPassword);
+        return OkResponse("Password has been reset");
+    }
+
+    [Authorize]
+    [HttpPost("change-password")]
+    public async Task<ActionResult<ApiResponse>> ChangePassword([FromBody] ChangePasswordRequest request)
+    {
+        var username = User.Identity?.Name
+            ?? throw new UnauthorizedAccessException("Invalid credentials");
+        await _authService.ChangePasswordAsync(username, request.CurrentPassword, request.NewPassword);
+        AuthCookieHelper.ClearAuthCookies(Response, _env.IsProduction());
+        return OkResponse("Password changed. Please login again");
+    }
+
     private void SetAuthCookies(AuthResult r)
     {
         AuthCookieHelper.SetAuthCookies(

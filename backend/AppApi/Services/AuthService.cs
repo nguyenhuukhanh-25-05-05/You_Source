@@ -12,17 +12,20 @@ public class AuthService : IAuthService
     private readonly ITokenService _tokenService;
     private readonly IConfiguration _configuration;
     private readonly AppDbContext _dbContext;
+    private readonly IEmailService _emailService;
 
     public AuthService(
         UserManager<ApplicationUser> userManager,
         ITokenService tokenService,
         IConfiguration configuration,
-        AppDbContext dbContext)
+        AppDbContext dbContext,
+        IEmailService emailService)
     {
         _userManager = userManager;
         _tokenService = tokenService;
         _configuration = configuration;
         _dbContext = dbContext;
+        _emailService = emailService;
     }
 
     public async Task<AuthResult> LoginAsync(LoginRequest request, string? deviceInfo = null)
@@ -216,5 +219,43 @@ public class AuthService : IAuthService
         foreach (var t in active)
             t.RevokedAt = DateTime.UtcNow;
         await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task ForgotPasswordAsync(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null || !user.IsActive)
+            return;
+
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var resetUrl = $"{_configuration["Cors:AllowedOrigins"]?.Split(';')[0]}/reset-password?email={Uri.EscapeDataString(email)}&token={Uri.EscapeDataString(token)}";
+
+        await _emailService.SendAsync(email, "Reset your password", $"Reset your password: {resetUrl}");
+    }
+
+    public async Task ResetPasswordAsync(string email, string token, string newPassword)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null || !user.IsActive)
+            throw new InvalidOperationException("Password reset failed");
+
+        var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+        if (!result.Succeeded)
+            throw new InvalidOperationException("Password reset failed");
+
+        await RevokeAllTokensAsync(user.Id);
+    }
+
+    public async Task ChangePasswordAsync(string username, string currentPassword, string newPassword)
+    {
+        var user = await _userManager.FindByNameAsync(username)
+            ?? throw new UnauthorizedAccessException("Invalid credentials");
+
+        var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+        if (!result.Succeeded)
+            throw new UnauthorizedAccessException("Invalid credentials");
+
+        await _userManager.UpdateSecurityStampAsync(user);
+        await RevokeAllTokensAsync(user.Id);
     }
 }
