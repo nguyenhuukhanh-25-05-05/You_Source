@@ -1,0 +1,52 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+*.csproj.user
+
+## Node
+node_modules/
+dist/
+.npm
+*.log
+
+## IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+## OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+## Logs
+logs/
+*.log
+
+## Environment
+.env
+.env.local
+.env.*.local
+appsettings.*.local.json
+
+## Uploads
+wwwroot/uploads/
+
+## Docker
+.docker/
+
+## Build
+publish/
+artifacts/
+
+## Secrets
+*.pfx
+*.key
+secrets.json

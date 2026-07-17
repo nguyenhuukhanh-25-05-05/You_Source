@@ -1,0 +1,32 @@
+{
+  "name": "starter-ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --fix",
+    "format": "prettier --write \"src/**/*.{js,vue,css,html}\"",
+    "format:check": "prettier --check \"src/**/*.{js,vue,css,html}\""
+  },
+  "dependencies": {
+    "axios": "^1.18.1",
+    "pinia": "^4.0.2",
+    "vue": "^3.5.39",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "eslint": "^9.10.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-vue": "^9.28.0",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.1.1"
+  }
+}
